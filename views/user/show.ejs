@@ -1,0 +1,137 @@
+<%include ../partials/header %>
+
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+
+
+
+
+<body>   
+
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+    <div class="span3 well">
+        <center>
+        <a href="#aboutModal" data-toggle="modal" data-target="#myModal"><img src="<%=user.image%>" name="aboutme" width="140" height="140" class="img-circle"></a><br>
+        <h3><%=user.firstName+" "+user.lastName %> </h3>
+         
+        <em>click my face for more</em>
+		</center>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title" id="myModalLabel">More About <%=user.firstName%></h4>
+                    </div>
+                <div class="modal-body">
+                    <center>
+
+<!-- 
+                            <div class="dropdown">
+                                    <div class="dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" style="background-color:white;border-color:white;    width: 30% ;outline:0;">
+                                     <img src="<%=user.image%>" class="img-circle" width="140" height="140" border="0">
+                                    </div>
+
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1" style="margin-left:350px;border-radius: 20px;">
+                                                form
+                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="" style="border-radius:30px;">Remove Profile Picture</a></li>
+                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/user/<%=user._id%>/edit" style="border-radius:30px;">Edit Profile</a></li>
+                
+                                                  </ul> 
+
+                                                                      
+                                  </div>   -->
+
+                   <img src="<%=user.image%>" name="aboutme" width="140" height="140" border="0" class="img-circle"><br> 
+
+                    
+                     
+                    <h3 class="media-heading"><%=user.firstName+" "+user.lastName %></h3>    
+                    </center>
+
+                    <hr>
+                    <p class="text-left"><strong>BlogHouse Username: </strong><br>
+                        <%=user.username%></p>
+                    <br>
+                    <p class="text-left"><strong>Email: </strong><br>
+                        <%=user.email%></p>
+                    <br>    
+                    <p class="text-left"><strong>About: </strong><br>
+                        <%=user.about%></p>
+                    <br>
+                    <p class="text-left"><strong>Hobbies: </strong><br>
+                        <%=user.hobbies%></p>
+                    <br>
+
+                </div>
+                <div class="modal-footer">
+                    <center>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"> Close</button>
+                    
+                    <% if(currentUser && user._id.equals(currentUser._id)){ %>
+                    <a class="btn btn-default" href="/user/<%=user._id%>/edit">Edit</a>
+                    <% } %>
+
+
+ 
+
+                    <%if(currentUser && !(user._id.equals(currentUser._id))  && (user.followers.indexOf(currentUser._id) === -1)) {%>   
+                        <a class="btn btn-default" href="/follow/<%=user._id%>">Follow</a>
+                    
+                        <%}%>
+
+                    
+                        <%if(currentUser && user.followers.indexOf(currentUser._id) > -1){%>
+                            <a class="btn btn-success" href="/unfollow/<%=user._id%>">Following</a>
+                       <% }%>
+                    
+                   </center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<div class="container" style="width:50%;float:left">
+    <h4>Follower(s) : <%=user.followers.length%></h4>
+    <%populatedUser.followers.forEach(function(follower){%>
+    
+    <img class="img-circle" src="<%=follower.image%>" style="width:50px;height:50px;float:left">
+    <span style="padding:5px"><strong><a href="/user/<%=follower._id%>"><%=follower.username%></a></strong><br> </span>
+    <span style="padding:5px;color:darkgray"><em><%=(follower.firstName + " "+follower.lastName)%></em></span>
+    <hr style="width:60%">
+    
+    <%});%>    
+
+</div>
+   
+
+<div class="container" style="width:50%;float:left">
+    <h4>Following : <%=user.following.length%> </h4>
+
+    <%populatedUser.following.forEach(function(follow){%>
+
+        <img class="img-circle" src="<%=follow.image%>" style="width:50px;height:50px;float:left">
+        <span style="padding:5px"><strong><a href="/user/<%=follow._id%>"><%=follow.username%></a></strong><br> </span>
+        <span style="padding:5px;color:darkgray"><em><%=(follow.firstName + " "+follow.lastName)%></em></span>
+        <hr style="width:60%">
+
+
+    <%})%>
+</div>
+
+</div>
+
+
+<!-- <div class="jumbotron" style="width:60%;margin :0 auto;background:rgb(241, 241, 240);border-radius: 5px">
+
+
+</div> -->
+
+<%include ../partials/footer %>

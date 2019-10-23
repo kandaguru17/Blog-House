@@ -1,0 +1,103 @@
+<% include ../partials/header %>
+
+
+
+<div class="contianer container-padding">
+    <div class="row">
+       
+        
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" id="img-width-height" src="<%=campground.image%>">
+                
+                <div class="caption-full">
+                    
+                    <h4 class="pull-right"><strong></strong></h4>
+                    <h4><a><%=campground.name%></a>  <h4>
+                        <p> <%= campground.description%> </p>
+                        <p> Created By : <em><%= campground.author.username %></em> , <%=moment(campground.createdAt).fromNow() %>  </p>
+                        
+                        <% if(currentUser && campground.author._id.equals(currentUser._id)){%>
+                            
+                           <a class="btn btn-xs btn-warning" href="/campgrounds/<%=campground._id%>/edit">Edit</a>
+                
+                          <form  id="delete-form" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST">
+                             <button class="btn btn-xs btn-danger">delete</button>  
+                          </form>
+                    
+                        <% } %>
+                       
+                        <a id="delete-form" href="/campgrounds" class="btn btn-xs btn-success">Back To All Posts</a>
+                        
+                </div>
+              
+                
+            </div>
+            <div class="well">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/campgrounds/<%=campground._id%>/comments/new">Add Comment</a>
+                    
+                </div>
+                <hr>
+                <% for(var i=0;i<campground.comments.length;i++){ %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong> <%=campground.comments[i].author.username %></strong>
+                        
+                        <% if(currentUser && campground.comments[i].author._id.equals(currentUser._id)){ %>
+                        
+                        <a class="btn btn-xs btn-warning" href="/campgrounds/<%=campground._id%>/comments/<%=campground.comments[i]._id%>/edit">Edit</a>
+                        <form id ="delete-form" action="/campgrounds/<%=campground._id%>/comments/<%=campground.comments[i]._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                        
+                        <% } %>
+                         
+                        <span class="pull-right"><%=moment(campground.comments[i].createdAt).fromNow() %></span>
+                        <p><%= campground.comments[i].text %> </p>
+                        
+                    </div>
+                </div>
+
+                <% } %>
+                
+            <div class="textbox">
+
+             <form action="/campgrounds/<%=campground._id%>" method="POST">
+            
+            <div class="form-group">
+            
+            
+            <div class="form-group shadow-textarea">
+                 <textarea class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="2" placeholder="Comment something here..." name="comment[text]"></textarea>
+            </div>
+            
+            
+            <!--<div class="form-group">-->
+            <!--    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Add Comment" name="comment[text]">-->
+            <!--</div>-->
+            
+           <div class="text-right">
+               <button type="submit" class="btn btn-primary">Upload Comment</button>
+           </div>
+            
+        </form>
+      
+      <!--<a href="/campgrounds/<%= campground._id %>">Go Back</a>-->
+    </div>
+    	
+</div>
+</div>
+        </div>
+        
+    </div>
+    
+    
+
+
+
+
+<!--<h1> comment on "<%= campground.name %>"</h1>-->
+
+
+<% include ../partials/footer %>

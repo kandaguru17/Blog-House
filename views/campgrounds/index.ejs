@@ -1,0 +1,59 @@
+<% include ../partials/header %>
+
+<div class="container">
+
+    <header class="jumbotron">
+
+        <div class="container">
+
+            <h1><span class="glyphicon glyphicon-education" aria-hidden="true"></span> Welcome to BlogHouse.Com</h1>
+            <p class="pad-left">Read More..<span class="glyphicon glyphicon-eye-open glyphi-pad"
+                    aria-hidden="true"></span>Write More..<span class="glyphicon glyphicon-pencil glyphi-pad"
+                    aria-hidden="true"></span></p>
+
+            <p> <a class="btn btn-primary btn-large btn-margin" href="/campgrounds/new"><span
+                        class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a new Post</a>
+            </p>
+
+
+            <form id="delete-form" action="/campgrounds" method="GET">
+                <div class="form-group btn-margin">
+                    <input class="form-control" id="name" type="text" name="search" placeholder="search Blog here!!"
+                        style="width:30% ;float:left">
+                    <button type="submit" class="btn btn-sm btn-default btn-margin"
+                        style="width:10%;margin-left:10px">Search</button>
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </header>
+
+
+
+
+
+    <% for(var i=0;i<campgrounds.length;i++){ %>
+    <div class="col-md-12 blogShort">
+        <h1><%=campgrounds[i].name%></h1>
+        <img id="showimg" src="<%=campgrounds[i].image%>" alt="post img"
+            class="pull-left img-responsive thumb margin10 img-thumbnail">
+
+        <!--<em>This snippet use <a href="http://bootsnipp.com/snippets/featured/sexy-sidebar-navigation" target="_blank">Sexy Sidebar Navigation</a></em>-->
+
+        <article>
+            <p style="text-align: justify">
+                <%=campgrounds[i].description.substring(0,500) %>... <br><br>
+                <Strong>Created By :</Strong>
+                <em><%=campgrounds[i].author.firstName + " "+campgrounds[i].author.lastName %></em>
+            </p>
+        </article>
+        <a class="btn btn-blog pull-right marginBottom10" href="/campgrounds/<%=campgrounds[i]._id%>">READ MORE</a>
+    </div>
+
+    <% } %>
+
+<% include ../partials/footer %>
